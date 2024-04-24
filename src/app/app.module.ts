@@ -3,10 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DisplaygridComponent } from './displaygrid/displaygrid.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DisplaygridComponent
   ],
   imports: [
     BrowserModule,
