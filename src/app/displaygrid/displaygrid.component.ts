@@ -1,19 +1,24 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { GameOfLifeService } from '../game-of-life.service';
-import { Cell } from '../models/classes/cell.class';
 
 @Component({
   selector: 'app-displaygrid',
   templateUrl: './displaygrid.component.html',
   styleUrl: './displaygrid.component.css'
 })
-export class DisplaygridComponent {
+export class DisplayGridComponent implements OnInit{
 
   gridService = inject(GameOfLifeService);
-  grid: number[][] = this.gridService.grid;
+  gridRepresentation: number[][]= [];
   constructor(){
-    console.log(this.gridService.grid);
   }
+
+  ngOnInit(): void {
+    console.log(this.gridService.printGrid());
+    this.gridRepresentation = this.gridService.printGrid();
+  }
+
+
 
 
 }

@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Cell } from './models/classes/cell.class';
+import { Grid } from './models/classes/grid.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameOfLifeService {
 
-  grid:number[][] = [[]];
+  grid:Grid;
   gridDimension = 8;
-  constructor() {
-    this.grid = new Array(this.gridDimension).fill(false).map(() => new Array(this.gridDimension).fill(new Cell(0)));
-   }
 
+  constructor() {
+    this.grid = new Grid(8,8);
+  }
+
+
+  printGrid(): number[][]{
+    return this.grid.getGridRepresentation();
+  }
 
 }
