@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Grid } from './models/classes/grid.class';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, delay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,11 @@ export class GameOfLifeService {
   private gridView$ = new BehaviorSubject<number[][]>(this.grid.getGridRepresentation());
 
   constructor() {
-    // this.runLifeCycle();
+    this.gridView$.next(this.printGrid());
+  }
+
+  getGrid$(): Observable<number[][]>{
+    return this.gridView$;
   }
 
 
@@ -21,9 +25,10 @@ export class GameOfLifeService {
     return this.grid.getGridRepresentation();
   }
 
-  // runLifeCycle(): Observable<number[][]> {
-
-  //   return
-  // }
+  runLifeCycle() {
+    this.grid.stepOneLifeCycle();
+    delay(1000);
+    this.gridView$.next(this.grid.getGridRepresentation());
+  }
 
 }

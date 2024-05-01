@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { GameOfLifeService } from '../../game-of-life.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-displaygrid',
@@ -9,16 +10,13 @@ import { GameOfLifeService } from '../../game-of-life.service';
 export class DisplayGridComponent implements OnInit{
 
   gridService = inject(GameOfLifeService);
-  gridRepresentation: number[][]= [];
+
+  gridRepresentation$: Observable<number[][]> = this.gridService.getGrid$();
+
   constructor(){
   }
 
   ngOnInit(): void {
-    console.log(this.gridService.printGrid());
-    this.gridRepresentation = this.gridService.printGrid();
   }
-
-
-
 
 }

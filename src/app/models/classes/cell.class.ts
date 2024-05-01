@@ -18,4 +18,11 @@ export class Cell {
     kill():void {
         this.value = 0;
     }
+    isAlive(): boolean {
+        if (this.value !== 0){
+            return true
+        } else {
+            return false
+        }
+    }
 }

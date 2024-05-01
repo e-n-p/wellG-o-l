@@ -11,6 +11,6 @@ export class MenuComponent {
   service = inject(GameOfLifeService);
 
   beginGame(){
-
+    this.service.runLifeCycle();
   }
 }
