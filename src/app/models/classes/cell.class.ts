@@ -12,10 +12,10 @@ export class Cell {
     setValue(newNum: number): void {
         this.value = newNum;
     }
-    seed() {
+    seed(): void {
         this.value = 1;
     }
-    kill() {
+    kill():void {
         this.value = 0;
     }
 }

@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DisplayGridComponent } from './displaygrid/displaygrid.component';
+import { DisplayGridComponent } from './components/displaygrid/displaygrid.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DisplayGridComponent
+    DisplayGridComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

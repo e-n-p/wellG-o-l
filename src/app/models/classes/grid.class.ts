@@ -9,7 +9,7 @@ export class Grid {
         this.seedGrid(10);
     }
 
-    createGrid(height: number, width: number) {
+    createGrid(height: number, width: number): void {
         const outerArray = new Array(height);
         for (let i = 0; i < height; i++) {
             outerArray[i] = [];
@@ -20,7 +20,7 @@ export class Grid {
         this.grid = outerArray;
     }
 
-    getGridRepresentation() {
+    getGridRepresentation(): number[][] {
         const printedGrid: number[][] = Array(this.height).fill(false).map(() => new Array(this.width).fill(false));
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
@@ -32,12 +32,10 @@ export class Grid {
 
     seedGrid(amount: number): void {
         for (let i = 0; i < amount; i++) {
-            let ranHeight = Math.floor(Math.random() * this.height);
-            let ranWidth = Math.floor(Math.random() * this.height);
-            console.log(ranHeight + " - " + ranWidth);
-            this.grid[ranHeight][ranWidth].seed();
+            let randHeight = Math.floor(Math.random() * this.height);
+            let randWidth = Math.floor(Math.random() * this.width);
+            this.grid[randHeight][randWidth].seed();
         }
     }
-
 
 }

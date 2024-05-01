@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { GameOfLifeService } from '../game-of-life.service';
+import { GameOfLifeService } from '../../game-of-life.service';
 
 @Component({
   selector: 'app-displaygrid',
