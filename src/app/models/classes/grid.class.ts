@@ -6,7 +6,7 @@ export class Grid {
     seedAmount: number = 50;
     //grid search and print operations in here
     constructor(private width: number, private height: number) {
-        this.createGrid(height, width)
+        this.createGrid(height, width);
         this.seedGrid(this.seedAmount);
     }
 

@@ -4,7 +4,6 @@
     <table>
         <tr *ngFor="let row of grid">
             <td class="cell" [ngClass]="{'alive': cell === 1, 'dead': cell !== 1}" *ngFor="let cell of row">
-                {{cell}}
             </td>
         </tr>
     </table>

@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DisplayGridComponent } from './components/displaygrid/displaygrid.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { MainPageComponent } from './components/main-page/main-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DisplayGridComponent,
-    MenuComponent
+    MenuComponent,
+    MainPageComponent
   ],
   imports: [
     BrowserModule,
