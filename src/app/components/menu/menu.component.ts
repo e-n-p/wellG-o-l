@@ -10,7 +10,11 @@ export class MenuComponent {
 
   service = inject(GameOfLifeService);
 
-  beginGame(){
+  beginGame(): void{
     this.service.runLifeCycle();
+  }
+
+  reset(): void{
+    this.service.reset();
   }
 }

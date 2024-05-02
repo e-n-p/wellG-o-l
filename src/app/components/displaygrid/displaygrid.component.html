@@ -1,11 +1,5 @@
 <p>displaygrid works! as you can see thusly</p>
 
-<!-- <div class="gridContainer">
-    <div *ngFor="let row of gridRepresentation">
-        {{row}}
-    </div>
-</div> -->
-
 <div class="gridContainer" *ngIf="gridRepresentation$ | async as grid">
     <div *ngFor="let row of grid">
         {{row}}

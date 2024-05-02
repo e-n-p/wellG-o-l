@@ -20,14 +20,18 @@ export class GameOfLifeService {
     return this.gridView$;
   }
 
-
   printGrid(): number[][] {
     return this.grid.getGridRepresentation();
   }
 
-  runLifeCycle() {
+  runLifeCycle(): void {
     this.grid.stepOneLifeCycle();
     delay(1000);
+    this.gridView$.next(this.grid.getGridRepresentation());
+  }
+
+  reset(): void{
+    this.grid.resetGrid();
     this.gridView$.next(this.grid.getGridRepresentation());
   }
 

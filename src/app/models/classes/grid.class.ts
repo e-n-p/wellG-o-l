@@ -3,13 +3,14 @@ import { Cell } from "./cell.class"
 export class Grid {
 
     private grid!: Cell[][];
+    seedAmount: number = 50;
     //grid search and print operations in here
     constructor(private width: number, private height: number) {
         this.createGrid(height, width)
-        this.seedGrid(50);
+        this.seedGrid(this.seedAmount);
     }
 
-    createGrid(height: number, width: number): void {
+    private createGrid(height: number, width: number): void {
         const outerArray = new Array(height);
         for (let i = 0; i < height; i++) {
             outerArray[i] = [];
@@ -20,7 +21,12 @@ export class Grid {
         this.grid = outerArray;
     }
 
-    getGridRepresentation(): number[][] {
+    public resetGrid(){
+        this.createGrid(this.height, this.width);
+        this.seedGrid(this.seedAmount);
+    }
+
+    public getGridRepresentation(): number[][] {
         const printedGrid: number[][] = Array(this.height).fill(false).map(() => new Array(this.width).fill(false));
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
@@ -38,7 +44,7 @@ export class Grid {
         }
     }
 
-    getNeighbourAmount(x:number, y:number): number{
+    private getNeighbourAmount(x:number, y:number): number{
         const neighbourCells: [number, number][] = [
             [x-1, y-1],
             [x-1, y],
@@ -66,7 +72,7 @@ export class Grid {
         return count
     }
 
-    stepOneLifeCycle(){
+    public stepOneLifeCycle(){
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
                 let neighbours = this.getNeighbourAmount(i,j);
