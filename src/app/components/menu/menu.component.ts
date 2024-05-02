@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { GameOfLifeService } from '../../game-of-life.service';
 
 @Component({
@@ -9,6 +9,9 @@ import { GameOfLifeService } from '../../game-of-life.service';
 export class MenuComponent {
 
   service = inject(GameOfLifeService);
+  // seedQuantity:number = 50;
+  @Output()
+  seedQuantity: EventEmitter<number> = new EventEmitter<number>();
 
   beginGame(): void{
     this.service.runLifeCycle();

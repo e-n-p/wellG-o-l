@@ -1,7 +1,11 @@
 <p>displaygrid works! as you can see thusly</p>
 
 <div class="gridContainer" *ngIf="gridRepresentation$ | async as grid">
-    <div *ngFor="let row of grid">
-        {{row}}
-    </div>
+    <table>
+        <tr *ngFor="let row of grid">
+            <td class="cell" [ngClass]="{'alive': cell === 1, 'dead': cell !== 1}" *ngFor="let cell of row">
+                {{cell}}
+            </td>
+        </tr>
+    </table>
 </div>

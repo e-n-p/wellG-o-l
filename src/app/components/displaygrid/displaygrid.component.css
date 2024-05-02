@@ -1,5 +1,24 @@
+table td{
+    border: 1px solid gray;
+}
+
 .gridContainer{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.cell {
+    width: 2rem;
+    height: 2rem;
+}
+
+.alive {
+    background-color: black;
+    color: black;
+}
+
+.dead {
+    background-color: white;
+    color: white;
 }

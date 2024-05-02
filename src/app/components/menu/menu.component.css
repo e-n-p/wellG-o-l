@@ -1,5 +1,11 @@
-.row-1{
+.row-1 {
     gap: 1rem;
     display: flex;
-    
+    margin: 1rem;
+}
+
+.row-2 {
+    gap: 1rem;
+    display: flex;
+    margin: 1rem;
 }

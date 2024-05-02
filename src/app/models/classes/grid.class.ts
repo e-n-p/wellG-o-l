@@ -64,7 +64,6 @@ export class Grid {
                 (neighbourY < 0 || neighbourY >= this.width)) {
                 continue
             }
-            console.log(neighbourX + "-" + neighbourY);
             if (this.grid[neighbourX][neighbourY].isAlive()){
                 count++;
             }
