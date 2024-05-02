@@ -7,16 +7,17 @@ import { Observable } from 'rxjs';
   templateUrl: './displaygrid.component.html',
   styleUrl: './displaygrid.component.css'
 })
-export class DisplayGridComponent implements OnInit{
+export class DisplayGridComponent {
 
   gridService = inject(GameOfLifeService);
 
   gridRepresentation$: Observable<number[][]> = this.gridService.getGrid$();
 
-  constructor(){
-  }
+  toggleCell(x:number, y:number): void {
+    console.log("in toggle");
+    console.log(x , y);
 
-  ngOnInit(): void {
+    this.gridService.toggle(x, y);
   }
 
 }

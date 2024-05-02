@@ -13,10 +13,10 @@ export class GameOfLifeService {
   private gridView$ = new BehaviorSubject<number[][]>(this.grid.getGridRepresentation());
 
   constructor() {
-    this.gridView$.next(this.printGrid());
+    this.updateObservable();
   }
 
-  getGrid$(): Observable<number[][]>{
+  getGrid$(): Observable<number[][]> {
     return this.gridView$;
   }
 
@@ -24,15 +24,34 @@ export class GameOfLifeService {
     return this.grid.getGridRepresentation();
   }
 
+  updateObservable(): void {
+    this.gridView$.next(this.printGrid());
+  }
+
+  toggle(x: number, y: number): void {
+    this.grid.toggle(x, y);
+    this.updateObservable();
+  }
+
+
   runLifeCycle(): void {
     this.grid.stepOneLifeCycle();
     delay(1000);
-    this.gridView$.next(this.grid.getGridRepresentation());
+    this.updateObservable();
   }
 
-  reset(): void{
+  reset(): void {
     this.grid.resetGrid();
-    this.gridView$.next(this.grid.getGridRepresentation());
+    this.updateObservable();
+  }
+
+  updateSettings(changeArray: number[]): void {
+    this.grid.seedAmount = changeArray[0];
+    this.grid.width = changeArray[1];
+    this.grid.height = changeArray[2];
+
+    this.grid.resetGrid();
+    this.updateObservable();
   }
 
 }

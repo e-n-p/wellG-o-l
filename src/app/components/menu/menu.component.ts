@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { GameOfLifeService } from '../../game-of-life.service';
 
 @Component({
@@ -9,15 +9,20 @@ import { GameOfLifeService } from '../../game-of-life.service';
 export class MenuComponent {
 
   service = inject(GameOfLifeService);
-  // seedQuantity:number = 50;
-  @Output()
-  seedQuantity: EventEmitter<number> = new EventEmitter<number>();
+  seedQuantity: number = 50;
+  gridHeight: number = 8;
+  gridWeight: number = 8;
 
-  beginGame(): void{
+
+  beginGame(): void {
     this.service.runLifeCycle();
   }
 
-  reset(): void{
+  reset(): void {
     this.service.reset();
+  }
+
+  onChanges(): void {
+    this.service.updateSettings([this.seedQuantity, this.gridHeight, this.gridWeight]);
   }
 }

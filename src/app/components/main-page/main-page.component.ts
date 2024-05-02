@@ -7,9 +7,4 @@ import { Component } from '@angular/core';
 })
 export class MainPageComponent {
 
-  seedQuant:number = 0;
-
-  passSeedQuantity(quantity: number){
-    this.seedQuant = quantity;
-  }
 }

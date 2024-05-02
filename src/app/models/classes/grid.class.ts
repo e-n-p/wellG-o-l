@@ -5,7 +5,7 @@ export class Grid {
     private grid!: Cell[][];
     seedAmount: number = 50;
     //grid search and print operations in here
-    constructor(private width: number, private height: number) {
+    constructor(public width: number, public height: number) {
         this.createGrid(height, width);
         this.seedGrid(this.seedAmount);
     }
@@ -21,7 +21,7 @@ export class Grid {
         this.grid = outerArray;
     }
 
-    public resetGrid(){
+    public resetGrid() {
         this.createGrid(this.height, this.width);
         this.seedGrid(this.seedAmount);
     }
@@ -36,7 +36,7 @@ export class Grid {
         return printedGrid;
     }
 
-    seedGrid(amount: number): void {
+    public seedGrid(amount: number): void {
         for (let i = 0; i < amount; i++) {
             let randHeight = Math.floor(Math.random() * this.height);
             let randWidth = Math.floor(Math.random() * this.width);
@@ -44,44 +44,51 @@ export class Grid {
         }
     }
 
-    private getNeighbourAmount(x:number, y:number): number{
+    private getNeighbourAmount(x: number, y: number): number {
         const neighbourCells: [number, number][] = [
-            [x-1, y-1],
-            [x-1, y],
-            [x-1, y+1],
+            [x - 1, y - 1],
+            [x - 1, y],
+            [x - 1, y + 1],
 
-            [x, y-1],
-            [x, y+1],
+            [x, y - 1],
+            [x, y + 1],
 
-            [x+1, y-1],
-            [x+1, y],
-            [x+1, y+1],
+            [x + 1, y - 1],
+            [x + 1, y],
+            [x + 1, y + 1],
         ];
-        let count:number = 0;
-        for (const [neighbourX, neighbourY] of neighbourCells){
+        let count: number = 0;
+        for (const [neighbourX, neighbourY] of neighbourCells) {
             if (
-                (neighbourX < 0 || neighbourX >= this.height) || 
+                (neighbourX < 0 || neighbourX >= this.height) ||
                 (neighbourY < 0 || neighbourY >= this.width)) {
                 continue
             }
-            if (this.grid[neighbourX][neighbourY].isAlive()){
+            if (this.grid[neighbourX][neighbourY].isAlive()) {
                 count++;
             }
         }
         return count
     }
 
-    public stepOneLifeCycle(){
+    public stepOneLifeCycle() {
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
-                let neighbours = this.getNeighbourAmount(i,j);
-                if (neighbours < 2 || neighbours > 3){
+                let neighbours = this.getNeighbourAmount(i, j);
+                if (neighbours < 2 || neighbours > 3) {
                     this.grid[i][j].kill();
-                } else if (this.grid[i][j].isAlive() && neighbours === 3) {
+                } else if (!this.grid[i][j].isAlive() && neighbours === 3) {
                     this.grid[i][j].seed();
                 }
             }
         }
     }
 
+    public toggle(x:number, y:number): void{
+        if (this.grid[x][y].isAlive()) {
+            this.grid[x][y].kill()
+        } else {
+            this.grid[x][y].seed()
+        }
+    }
 }
