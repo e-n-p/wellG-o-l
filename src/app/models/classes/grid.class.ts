@@ -20,7 +20,7 @@ export class Grid {
         return newGrid
     }
 
-    public resetGrid() {
+    public resetGrid(): void {
         this.grid = this.createGrid();
         this.seedGrid(this.seedAmount);
     }
@@ -70,13 +70,15 @@ export class Grid {
         return count
     }
 
-    public stepLifeCycle() {
+    public stepLifeCycle(): void {
         const newGrid = this.createGrid();
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
                 let neighbours = this.getNeighbourAmount(i, j);
-                if (neighbours < 2 || neighbours > 3) {
+                if (this.grid[i][j].isAlive() && (neighbours < 2 || neighbours > 3)) {
                     newGrid[i][j].kill();
+                } else if (this.grid[i][j].isAlive() && (neighbours > 1 && neighbours < 4)) {
+                    newGrid[i][j].seed();
                 } else if (!this.grid[i][j].isAlive() && neighbours === 3) {
                     newGrid[i][j].seed();
                 }
@@ -85,7 +87,7 @@ export class Grid {
         this.grid = newGrid;
     }
 
-    public toggle(x:number, y:number): void{
+    public toggle(x: number, y: number): void {
         if (this.grid[x][y].isAlive()) {
             this.grid[x][y].kill()
         } else {

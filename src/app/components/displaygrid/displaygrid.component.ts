@@ -14,9 +14,6 @@ export class DisplayGridComponent {
   gridRepresentation$: Observable<number[][]> = this.gridService.getGrid$();
 
   toggleCell(x:number, y:number): void {
-    console.log("in toggle");
-    console.log(x , y);
-
     this.gridService.toggle(x, y);
   }
 

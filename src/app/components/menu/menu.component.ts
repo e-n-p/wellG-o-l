@@ -11,7 +11,7 @@ export class MenuComponent {
   service = inject(GameOfLifeService);
   seedQuantity: number = 50;
   gridHeight: number = 8;
-  gridWeight: number = 8;
+  gridWidth: number = 8;
 
 
   beginGame(): void {
@@ -23,6 +23,6 @@ export class MenuComponent {
   }
 
   onChanges(): void {
-    this.service.updateSettings([this.seedQuantity, this.gridHeight, this.gridWeight]);
+    this.service.updateSettings([this.seedQuantity, this.gridHeight, this.gridWidth]);
   }
 }

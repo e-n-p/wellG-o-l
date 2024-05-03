@@ -46,8 +46,8 @@ export class GameOfLifeService {
 
   updateSettings(changeArray: number[]): void {
     this.grid.seedAmount = changeArray[0];
-    this.grid.width = changeArray[1];
-    this.grid.height = changeArray[2];
+    this.grid.height = changeArray[1];
+    this.grid.width = changeArray[2];
 
     this.grid.resetGrid();
     this.updateObservable();
