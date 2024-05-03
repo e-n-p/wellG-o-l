@@ -35,8 +35,7 @@ export class GameOfLifeService {
 
 
   runLifeCycle(): void {
-    this.grid.stepOneLifeCycle();
-    delay(1000);
+    this.grid.stepLifeCycle();
     this.updateObservable();
   }
 

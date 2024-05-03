@@ -4,25 +4,24 @@ export class Grid {
 
     private grid!: Cell[][];
     seedAmount: number = 50;
-    //grid search and print operations in here
     constructor(public width: number, public height: number) {
-        this.createGrid(height, width);
+        this.grid = this.createGrid();
         this.seedGrid(this.seedAmount);
     }
 
-    private createGrid(height: number, width: number): void {
-        const outerArray = new Array(height);
+    private createGrid(height: number = this.height, width: number = this.width): Cell[][] {
+        const newGrid = new Array(height);
         for (let i = 0; i < height; i++) {
-            outerArray[i] = [];
+            newGrid[i] = [];
             for (let j = 0; j < width; j++) {
-                outerArray[i][j] = new Cell();
+                newGrid[i][j] = new Cell();
             }
         }
-        this.grid = outerArray;
+        return newGrid
     }
 
     public resetGrid() {
-        this.createGrid(this.height, this.width);
+        this.grid = this.createGrid();
         this.seedGrid(this.seedAmount);
     }
 
@@ -71,17 +70,19 @@ export class Grid {
         return count
     }
 
-    public stepOneLifeCycle() {
+    public stepLifeCycle() {
+        const newGrid = this.createGrid();
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
                 let neighbours = this.getNeighbourAmount(i, j);
                 if (neighbours < 2 || neighbours > 3) {
-                    this.grid[i][j].kill();
+                    newGrid[i][j].kill();
                 } else if (!this.grid[i][j].isAlive() && neighbours === 3) {
-                    this.grid[i][j].seed();
+                    newGrid[i][j].seed();
                 }
             }
         }
+        this.grid = newGrid;
     }
 
     public toggle(x:number, y:number): void{
