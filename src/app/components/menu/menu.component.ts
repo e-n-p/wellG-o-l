@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { GameOfLifeService } from '../../game-of-life.service';
+import { GameOfLifeService } from '../../shared/game-of-life.service';
 
 @Component({
   selector: 'app-menu',
@@ -14,8 +14,12 @@ export class MenuComponent {
   gridWidth: number = 8;
 
 
-  beginGame(): void {
-    this.service.runLifeCycle();
+  stepLifeCycle(): void {
+    this.service.runALifeCycle();
+  }
+
+  runLifeCycle(): void {
+    this.service.runCompleteLifeCycle$().subscribe();
   }
 
   reset(): void {

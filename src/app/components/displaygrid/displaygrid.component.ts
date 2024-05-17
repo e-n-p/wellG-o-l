@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { GameOfLifeService } from '../../game-of-life.service';
+import { GameOfLifeService } from '../../shared/game-of-life.service';
 import { Observable } from 'rxjs';
 
 @Component({
