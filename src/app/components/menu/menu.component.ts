@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { GameOfLifeService } from '../../shared/game-of-life.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -31,4 +30,9 @@ export class MenuComponent {
   onChanges(): void {
     this.service.updateSettings([this.seedQuantity, this.gridHeight, this.gridWidth]);
   }
+
+  halt(): void {
+    this.service.halt();
+  }
+
 }

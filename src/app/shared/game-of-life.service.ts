@@ -82,6 +82,10 @@ export class GameOfLifeService {
     return true;
   }
 
+  public halt(): void {
+    this.breakerSubject.next();
+  }
+
   public reset(): void {
     this.breakerSubject.next();
     this.grid.resetGrid();
