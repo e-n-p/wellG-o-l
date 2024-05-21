@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { GameOfLifeService } from '../../shared/game-of-life.service';
 import { Observable } from 'rxjs';
 
