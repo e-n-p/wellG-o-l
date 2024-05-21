@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { GameOfLifeService } from '../../shared/game-of-life.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -8,10 +9,10 @@ import { GameOfLifeService } from '../../shared/game-of-life.service';
 })
 export class MenuComponent {
 
-  service = inject(GameOfLifeService);
-  seedQuantity: number = 50;
-  gridHeight: number = 8;
-  gridWidth: number = 8;
+  public seedQuantity: number = 50;
+  public gridHeight: number = 8;
+  public gridWidth: number = 8;
+  private service = inject(GameOfLifeService);
 
 
   stepLifeCycle(): void {
@@ -20,6 +21,7 @@ export class MenuComponent {
 
   runLifeCycle(): void {
     this.service.runCompleteLifeCycle$().subscribe();
+
   }
 
   reset(): void {

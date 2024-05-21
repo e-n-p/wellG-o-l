@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Grid } from '../models/classes/grid.class';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameOfLifeService {
 
-  grid: Grid = new Grid(8, 8);
-  gridDimension = 8;
-
+  private grid: Grid = new Grid(8, 8);
+  breakerSubject = new Subject<void>();
   private gridView$ = new BehaviorSubject<number[][]>(this.grid.getGridRepresentation());
 
   constructor() {
@@ -39,18 +38,16 @@ export class GameOfLifeService {
   }
 
   public runCompleteLifeCycle$(): Observable<void> {
-      let flag = true;
+      let isCompleted = false;
       let lastGridState: number[][] = [];
       let counter: number = 0;
 
       const updateAndCheckIfComplete = () => {
         this.grid.stepLifeCycle();
         this.updateObservable();
-        console.log(counter);
-        console.log(lastGridState);
         let newGridState = this.printGrid();
         if (counter != 0 && this.areGridsMatching(lastGridState, newGridState)) {
-          flag = false;
+          isCompleted = true;
         }
         counter++;
         lastGridState = structuredClone(newGridState);
@@ -59,12 +56,18 @@ export class GameOfLifeService {
       return new Observable<void>(obs => {
         const intervalId = setInterval(() => {
           updateAndCheckIfComplete();
-          if (!flag) {
+          if (isCompleted) {
+            console.log("in breaker");
             clearInterval(intervalId);
             obs.next();
             obs.complete();
           }
         }, 1000);
+        this.breakerSubject.subscribe(() => {
+          clearInterval(intervalId);
+          obs.next();
+          obs.complete();
+      });
       })
   }
 
@@ -80,6 +83,7 @@ export class GameOfLifeService {
   }
 
   public reset(): void {
+    this.breakerSubject.next();
     this.grid.resetGrid();
     this.updateObservable();
   }
