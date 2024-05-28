@@ -1,15 +1,41 @@
 <h1>Game o' life</h1>
 
-<div class="gridContainer" *ngIf="gridRepresentation$ | async as grid">
-    <table>
-        <tr *ngFor="let row of grid; index as i">
-            <td 
-                class="cell"
-                [ngClass]="{'alive': cell === 1, 'dead': cell !== 1}"
-                *ngFor="let cell of row; index as j"
-                (click)="toggleCell(i, j)"
-                >
-            </td>
-        </tr>
-    </table>
-</div>
+<!-- <div *ngIf="!; else heatMap"> -->
+    <div class="gridContainer" *ngIf="gridRepresentation$ | async as grid">
+        <table>
+            <tr *ngFor="let row of grid; index as i">
+                <td 
+                    class="cell"
+                    [ngClass]="{'alive': cell === 1, 'dead': cell !== 1}"
+                    *ngFor="let cell of row; index as j"
+                    (click)="toggleCell(i, j)"
+                    >
+                </td>
+            </tr>
+        </table>
+    </div>
+<!-- </div> -->
+
+<!-- <ng-template #heatMap> -->
+    <div class="gridContainer" *ngIf="heatGrid | async as grid">
+        <table>
+            <tr *ngFor="let row of grid; index as i">
+                <td 
+                    class="cell"
+                    [ngClass]="{
+                        'heat0': cell === 0,
+                        'heat1': cell === 1,
+                        'heat2': cell === 2,
+                        'heat3': cell === 3,
+                        'heat4': cell === 4,
+                        'heat5': cell === 5,
+                        }"
+                    *ngFor="let cell of row; index as j"
+                    >
+                    {{cell}}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+<!-- </ng-template> -->

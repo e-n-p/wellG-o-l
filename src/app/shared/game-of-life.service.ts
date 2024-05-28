@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Grid } from '../models/classes/grid.class';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 export class GameOfLifeService {
 
   public lifeCycleCount$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public heatGrid$: BehaviorSubject<number[][]> = new BehaviorSubject<number[][]>([]);
 
   private breakerSubject$: Subject<void> = new Subject<void>();
   private grid: Grid = new Grid(8, 8);
@@ -58,6 +59,7 @@ export class GameOfLifeService {
         if (counter != 0 && this.areGridsMatching(lastGridState, newGridState)) {
           isCompleted = true;
         }
+
         //could also be fine-tuned?
         if (counter > 100 && this.isGridInfinite(lastGridState, newGridState)) {
           isCompleted = true;
@@ -83,6 +85,7 @@ export class GameOfLifeService {
       });
       })
   }
+
   //is a bit buggy?
   public isGridInfinite(lastGridState: number[][], newGridState: number[][]): boolean {
     if (this.gridState.length){
@@ -120,7 +123,15 @@ export class GameOfLifeService {
     this.grid.width = changeArray[2];
     this.updateSpeed = changeArray[3] * 1000;
     this.reset();
+  }
 
+  public triggerHeatMap(): void {
+    this.heatGrid$.next(this.grid.heatStore);
+    this.gridView$.next([]);
+  }
+
+  public getHeatMap$(): Observable<number[][]> {
+    return this.heatGrid$;
   }
 
 }

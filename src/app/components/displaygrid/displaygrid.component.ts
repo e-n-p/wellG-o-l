@@ -9,12 +9,12 @@ import { Observable } from 'rxjs';
 })
 export class DisplayGridComponent {
 
-  gridService = inject(GameOfLifeService);
-
-  gridRepresentation$: Observable<number[][]> = this.gridService.getGrid$();
+  gameService = inject(GameOfLifeService);
+  gridRepresentation$: Observable<number[][]> = this.gameService.getGrid$();
+  heatGrid: Observable<number[][]> = this.gameService.getHeatMap$();
 
   toggleCell(x:number, y:number): void {
-    this.gridService.toggle(x, y);
+    this.gameService.toggle(x, y);
   }
 
 }

@@ -22,3 +22,33 @@ table td{
     background-color: white;
     color: white;
 }
+
+.heat0 {
+    background-color: white;
+    color: white;
+}
+.heat1 {
+    background-color: #1d4877;
+    color: #1d4877;
+
+}
+.heat2 {
+    background-color: #1b8a5a;
+    color: #1b8a5a;
+
+}
+.heat3 {
+    background-color: #fbb021;
+    color: #fbb021;
+
+}
+.heat4 {
+    background-color: #f68838;
+    color: #f68838;
+
+}
+.heat5 {
+    background-color: #ee3e32;
+    color: #ee3e32;
+
+}

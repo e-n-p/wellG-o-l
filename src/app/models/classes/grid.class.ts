@@ -4,9 +4,30 @@ export class Grid {
 
     private grid!: Cell[][];
     seedAmount: number = 50;
+    private _heatStore: number[][] = Array(this.height).fill(false).map(() => new Array(this.width).fill(0));
+
     constructor(public width: number, public height: number) {
         this.grid = this.createGrid();
         this.seedGrid(this.seedAmount);
+    }
+
+    public get heatStore(): number[][] {
+        let maxCount = 0;
+        for (let i=0;i<this.height;i++) {
+            let newMax = Math.max(...this._heatStore[i]);
+            if (newMax > maxCount){
+                maxCount = newMax;
+            }
+        }
+        let division = maxCount / 5;
+
+        for (let i = 0; i < this.height; i++) {
+            for (let j = 0; j < this.width; j++) {
+
+                this._heatStore[i][j] = Math.round(this._heatStore[i][j] / division);
+            }
+        }
+        return this._heatStore;
     }
 
     private createGrid(height: number = this.height, width: number = this.width): Cell[][] {
@@ -79,8 +100,10 @@ export class Grid {
                     newGrid[i][j].kill();
                 } else if (this.grid[i][j].isAlive() && (neighbours > 1 && neighbours < 4)) {
                     newGrid[i][j].seed();
+                    this._heatStore[i][j] += 1;
                 } else if (!this.grid[i][j].isAlive() && neighbours === 3) {
                     newGrid[i][j].seed();
+                    this._heatStore[i][j] += 1;
                 }
             }
         }
@@ -94,4 +117,5 @@ export class Grid {
             this.grid[x][y].seed()
         }
     }
+
 }

@@ -24,6 +24,10 @@ export class MenuComponent {
 
   }
 
+  showHeatMapGrid() {
+    this.service.triggerHeatMap();
+  }
+
   reset(): void {
     this.service.reset();
   }
