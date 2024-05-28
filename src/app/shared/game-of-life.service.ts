@@ -34,14 +34,12 @@ export class GameOfLifeService {
   }
 
   private incrementLifeCycleCount(): void{
-    this.lifeCycleCount$.pipe(
-      scan((acc,val) => acc+val)
-    );
+    this.lifeCycleCount$.next(this.lifeCycleCount$.value + 1);
   }
 
   public runALifeCycle(): void {
     this.grid.stepLifeCycle();
-    this.lifeCycleCount$.next();
+    this.incrementLifeCycleCount();
     this.updateObservable();
   }
 
@@ -58,7 +56,7 @@ export class GameOfLifeService {
           isCompleted = true;
         }
         counter++;
-        this.lifeCycleCount$.next(counter);
+        this.incrementLifeCycleCount();
         lastGridState = structuredClone(newGridState);
       }
 
