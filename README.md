@@ -8,6 +8,4 @@ Todo
     > some form of game
 
     smaller things
-    > lifecycle counter
-    > halting
     > better end condition detection?

@@ -13,7 +13,15 @@
         type="number" 
         id="seedQuantity" 
         [(ngModel)]="seedQuantity"
-        (ngModelChange)="onChanges()">
+        (ngModelChange)="onChanges()"
+        min=0>
+        <label>Speed: </label><input 
+        type="number" 
+        id="speed" 
+        [(ngModel)]="updateSpeed"
+        (ngModelChange)="onChanges()"
+        min=0>
+
     </div>
 
     <div class="row">

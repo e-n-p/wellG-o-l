@@ -7,10 +7,13 @@ import { BehaviorSubject, Observable, Subject, scan } from 'rxjs';
 })
 export class GameOfLifeService {
 
+  public lifeCycleCount$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  
+  private updateSpeed: number = 1000;
+  private breakerSubject$: Subject<void> = new Subject<void>();
   private grid: Grid = new Grid(8, 8);
-  breakerSubject = new Subject<void>();
-  private gridView$ = new BehaviorSubject<number[][]>(this.grid.getGridRepresentation());
-  public lifeCycleCount$ = new BehaviorSubject<number>(0);
+  private gridView$: BehaviorSubject<number[][]> = new BehaviorSubject<number[][]>(this.grid.getGridRepresentation());
+
 
   constructor() {
     this.updateObservable();
@@ -69,8 +72,8 @@ export class GameOfLifeService {
             obs.next();
             obs.complete();
           }
-        }, 1000);
-        this.breakerSubject.subscribe(() => {
+        }, this.updateSpeed);
+        this.breakerSubject$.subscribe(() => {
           clearInterval(intervalId);
           obs.next();
           obs.complete();
@@ -90,11 +93,11 @@ export class GameOfLifeService {
   }
 
   public halt(): void {
-    this.breakerSubject.next();
+    this.breakerSubject$.next();
   }
 
   public reset(): void {
-    this.breakerSubject.next();
+    this.breakerSubject$.next();
     this.grid.resetGrid();
     this.lifeCycleCount$.next(0);
     this.updateObservable();
@@ -104,6 +107,7 @@ export class GameOfLifeService {
     this.grid.seedAmount = changeArray[0];
     this.grid.height = changeArray[1];
     this.grid.width = changeArray[2];
+    this.updateSpeed = changeArray[3] * 1000;
 
     this.grid.resetGrid();
     this.updateObservable();
