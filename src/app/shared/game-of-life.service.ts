@@ -30,6 +30,7 @@ export class GameOfLifeService {
 
   private updateObservable(): void {
     this.gridView$.next(this.printGrid());
+    this.heatGrid$.next([]);
   }
 
   public toggle(x: number, y: number): void {

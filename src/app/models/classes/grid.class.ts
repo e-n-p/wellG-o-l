@@ -4,7 +4,7 @@ export class Grid {
 
     private grid!: Cell[][];
     seedAmount: number = 50;
-    private _heatStore: number[][] = Array(this.height).fill(false).map(() => new Array(this.width).fill(0));
+    private _heatStore: number[][] = this.createHeatMap();
 
     constructor(public width: number, public height: number) {
         this.grid = this.createGrid();
@@ -19,15 +19,18 @@ export class Grid {
                 maxCount = newMax;
             }
         }
-        let division = maxCount / 5;
 
+        let division = maxCount / 5;
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
-
                 this._heatStore[i][j] = Math.round(this._heatStore[i][j] / division);
             }
         }
         return this._heatStore;
+    }
+
+    private createHeatMap(): number[][] {
+        return Array(this.height).fill(false).map(() => new Array(this.width).fill(0));
     }
 
     private createGrid(height: number = this.height, width: number = this.width): Cell[][] {
@@ -38,10 +41,11 @@ export class Grid {
                 newGrid[i][j] = new Cell();
             }
         }
-        return newGrid
+        return newGrid;
     }
 
     public resetGrid(): void {
+        this._heatStore = this.createHeatMap();
         this.grid = this.createGrid();
         this.seedGrid(this.seedAmount);
     }
