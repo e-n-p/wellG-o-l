@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Grid } from '../models/classes/grid.class';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, scan } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class GameOfLifeService {
   private grid: Grid = new Grid(8, 8);
   breakerSubject = new Subject<void>();
   private gridView$ = new BehaviorSubject<number[][]>(this.grid.getGridRepresentation());
+  public lifeCycleCount$ = new BehaviorSubject<number>(0);
 
   constructor() {
     this.updateObservable();
@@ -32,8 +33,15 @@ export class GameOfLifeService {
     this.updateObservable();
   }
 
+  private incrementLifeCycleCount(): void{
+    this.lifeCycleCount$.pipe(
+      scan((acc,val) => acc+val)
+    );
+  }
+
   public runALifeCycle(): void {
     this.grid.stepLifeCycle();
+    this.lifeCycleCount$.next();
     this.updateObservable();
   }
 
@@ -50,6 +58,7 @@ export class GameOfLifeService {
           isCompleted = true;
         }
         counter++;
+        this.lifeCycleCount$.next(counter);
         lastGridState = structuredClone(newGridState);
       }
 
@@ -89,6 +98,7 @@ export class GameOfLifeService {
   public reset(): void {
     this.breakerSubject.next();
     this.grid.resetGrid();
+    this.lifeCycleCount$.next(0);
     this.updateObservable();
   }
 

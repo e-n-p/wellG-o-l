@@ -1,0 +1,10 @@
+<div class="stats-container">
+    <h3>Stats: </h3>
+    <div *ngIf="lifeCycleCount$ | async as cycleCount ; else emptyStats">
+        <p>Cycle generations: {{cycleCount}}</p>
+    </div>
+
+    <ng-template #emptyStats>
+        <p>Cycle generations: 0</p>
+    </ng-template>
+</div>
