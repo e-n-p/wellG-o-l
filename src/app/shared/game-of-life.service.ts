@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Grid } from '../models/classes/grid.class';
-import { BehaviorSubject, Observable, Subject, scan } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +8,12 @@ import { BehaviorSubject, Observable, Subject, scan } from 'rxjs';
 export class GameOfLifeService {
 
   public lifeCycleCount$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  
-  private updateSpeed: number = 1000;
+
   private breakerSubject$: Subject<void> = new Subject<void>();
   private grid: Grid = new Grid(8, 8);
   private gridView$: BehaviorSubject<number[][]> = new BehaviorSubject<number[][]>(this.grid.getGridRepresentation());
-
+  private updateSpeed: number = 1000;
+  private gridState: number[][] = [];
 
   constructor() {
     this.updateObservable();
@@ -49,13 +49,17 @@ export class GameOfLifeService {
   public runCompleteLifeCycle$(): Observable<void> {
       let isCompleted = false;
       let lastGridState: number[][] = [];
-      let counter: number = 0;
+      let counter: number = 0; // sync this to lifecycleCounter?
 
       const updateAndCheckIfComplete = () => {
         this.grid.stepLifeCycle();
         this.updateObservable();
         let newGridState = this.printGrid();
         if (counter != 0 && this.areGridsMatching(lastGridState, newGridState)) {
+          isCompleted = true;
+        }
+        //could also be fine-tuned?
+        if (counter > 100 && this.isGridInfinite(lastGridState, newGridState)) {
           isCompleted = true;
         }
         counter++;
@@ -67,7 +71,6 @@ export class GameOfLifeService {
         const intervalId = setInterval(() => {
           updateAndCheckIfComplete();
           if (isCompleted) {
-            console.log("in breaker");
             clearInterval(intervalId);
             obs.next();
             obs.complete();
@@ -79,6 +82,14 @@ export class GameOfLifeService {
           obs.complete();
       });
       })
+  }
+  //is a bit buggy?
+  public isGridInfinite(lastGridState: number[][], newGridState: number[][]): boolean {
+    if (this.gridState.length){
+      return this.areGridsMatching(this.gridState, newGridState);
+    }
+    this.gridState = structuredClone(lastGridState);
+    return false;
   }
 
   private areGridsMatching(oldGrid: number[][], newGrid: number[][]): boolean {
@@ -108,9 +119,8 @@ export class GameOfLifeService {
     this.grid.height = changeArray[1];
     this.grid.width = changeArray[2];
     this.updateSpeed = changeArray[3] * 1000;
+    this.reset();
 
-    this.grid.resetGrid();
-    this.updateObservable();
   }
 
 }
